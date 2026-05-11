@@ -1,0 +1,48 @@
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: mp2-namenode
+    restart: always
+    ports:
+      - "9870:9870"
+      - "9000:9000"
+    environment:
+      - CLUSTER_NAME=miniproject2
+    env_file:
+      - .env
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: mp2-datanode
+    restart: always
+    environment:
+      - SERVICE_PRECONDITION=mp2-namenode:9870
+    env_file:
+      - .env
+
+  resourcemanager:
+    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+    container_name: mp2-resourcemanager
+    restart: always
+    environment:
+      - SERVICE_PRECONDITION=mp2-namenode:9870 mp2-datanode:9864
+    env_file:
+      - .env
+
+  nodemanager:
+    image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+    container_name: mp2-nodemanager
+    restart: always
+    environment:
+      - SERVICE_PRECONDITION=mp2-namenode:9870 mp2-datanode:9864 mp2-resourcemanager:8088
+    env_file:
+      - .env
+
+  historyserver:
+    image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+    container_name: mp2-historyserver
+    restart: always
+    environment:
+      - SERVICE_PRECONDITION=mp2-namenode:9870 mp2-datanode:9864 mp2-resourcemanager:8088 mp2-nodemanager:8042
+    env_file:
+      - .env
