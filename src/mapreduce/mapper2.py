@@ -1,15 +1,23 @@
 #!/usr/bin/env python3
+
 import sys
-import csv
 
-reader = csv.reader(sys.stdin)
+for line in sys.stdin:
+    line = line.strip()
 
-for row in reader:
-    try:
-        if len(row) > 8:
-            building = row[2]
-            status = row[8]
-            if status == "WARNING" or status == "ERROR":
-                print("{}\t1".format(building))
-    except:
+    # Skip empty lines
+    if not line:
         continue
+
+    fields = line.split(",")
+
+    # Skip invalid rows
+    if len(fields) != 10:
+        continue
+
+    building = fields[2]
+    status = fields[8]
+
+    # Only WARNING and ERROR
+    if status == "WARNING" or status == "ERROR":
+        print(f"{building}\t1")

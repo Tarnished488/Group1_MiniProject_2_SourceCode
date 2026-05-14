@@ -13,6 +13,11 @@ for line in sys.stdin:
         continue
         
     key, value = parts
+
+    if key == "_header_sensor_type":
+        print("sensor_type,count")
+        continue
+   
     try:
         value = int(value)
     except ValueError:
@@ -22,9 +27,10 @@ for line in sys.stdin:
         current_count += value
     else:
         if current_key:
-            print("{}\t{}".format(current_key, current_count))
+           
+            print("{},{}".format(current_key, current_count))
         current_key = key
         current_count = value
 
 if current_key:
-    print("{}\t{}".format(current_key, current_count))
+    print("{},{}".format(current_key, current_count))
