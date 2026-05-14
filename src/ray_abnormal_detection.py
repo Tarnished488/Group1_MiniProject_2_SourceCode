@@ -9,8 +9,8 @@ ray.init()
 print("Ray started successfully!")
 
 # Read dataset
-access_key = "AKIAZP6KVLUWB7L3CAKZ"
-secret_key = "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"
+access_key = "AWS_ACCESS_KEY"
+secret_key = "AWS_SECRET_KEY"
 s3_uri = "s3://smart-campus-iot-logs-group1/Comp3006J MiniProject 2 Dataset.csv" 
 
 df = pd.read_csv(
