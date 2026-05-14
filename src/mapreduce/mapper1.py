@@ -2,21 +2,16 @@
 import sys
 import csv
 
-# Use the csv module to handle commas more robustly
 reader = csv.reader(sys.stdin)
 
 for row in reader:
     try:
-        # Index 6 corresponds to the 7th column: event_type
-        if len(row) > 6:
-            event_type = row[6].strip()
-            
-            # Key filter: skip header text and empty values
-            if event_type == "event_type" or not event_type:
+        # Index 5 corresponds to the 6th column: sensor_type
+        if len(row) > 5:
+            sensor_name = row[5].strip()
+
+            if sensor_name == "sensor_type" or not sensor_name:
                 continue
-            
-            # Output to reducer using tab separation
-            print("{0}\t1".format(event_type))
+            print("{0}\t1".format(sensor_name))
     except:
-        # Fault tolerance: skip malformed rows
         continue
