@@ -1,30 +1,28 @@
 #!/usr/bin/env python3
+
 import sys
 
-current_key = None
+current_building = None
 current_count = 0
 
 for line in sys.stdin:
     line = line.strip()
+
     if not line:
         continue
-    parts = line.split("\t")
-    if len(parts) != 2:
-        continue
-        
-    key, value = parts
-    try:
-        value = int(value)
-    except ValueError:
-        continue
 
-    if current_key == key:
-        current_count += value
+    building, count = line.split("\t")
+    count = int(count)
+
+    if current_building == building:
+        current_count += count
     else:
-        if current_key:
-            print("{}\t{}".format(current_key, current_count))
-        current_key = key
-        current_count = value
+        if current_building is not None:
+            print("{0}\t{1}".format(current_building, current_count))
 
-if current_key:
-    print("{}\t{}".format(current_key, current_count))
+        current_building = building
+        current_count = count
+
+# Output final result
+if current_building is not None:
+    print("{0}\t{1}".format(current_building, current_count))
